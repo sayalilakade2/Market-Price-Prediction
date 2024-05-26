@@ -10,7 +10,7 @@ import numpy as np
 import streamlit as st
 
 # Load the model
-loaded_model = pickle.load(open(r"C:\Users\sayal\internship\Farmoid\model.pkl", 'rb'))
+loaded_model = pickle.load(open("model.pkl", 'rb'))
 
 def DecisionTreeRegressor(input_data):
     input_data_asarray = np.asarray(input_data)
