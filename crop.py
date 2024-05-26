@@ -14,8 +14,12 @@ import streamlit as st
 model_path = 'model.pkl'
 loaded_model = None
 
+st.title("Market Price Prediction")
+
+# Load the model with detailed debugging
 if os.path.exists(model_path):
     try:
+        st.write(f"Attempting to load model from {model_path}...")
         with open(model_path, 'rb') as model_file:
             loaded_model = pickle.load(model_file)
             st.write(f"Loaded model type: {type(loaded_model)}")  # Debug: Print the type of the loaded model
@@ -52,7 +56,6 @@ def predict_price(entries):
         return f"Error during prediction: {e}"
 
 def main():
-    st.title("Market Price Prediction")
     entries = []
     for feature in ['District Name', 'Market Name', 'Commodity', 'Variety', 'Temperature', 'Precipitation']:
         entries.append(st.text_input(feature))
