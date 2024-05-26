@@ -10,7 +10,7 @@ import numpy as np
 import streamlit as st
 
 # Load the model
-loaded_model = pickle.load(open('model.pkl', 'rb'))
+loaded_model = pickle.load(open("model.pkl", 'rb'))
 
 def DecisionTreeRegressor(input_data):
     input_data_asarray = np.asarray(input_data)
@@ -29,6 +29,8 @@ def predict_price(entries):
         return f"The predicted price is ${predicted_price:,.2f}"
     except ValueError:
         return "Please enter valid inputs."
+    
+
 def main():
     st.title("Market Price Prediction")
     entries = []
@@ -42,5 +44,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
