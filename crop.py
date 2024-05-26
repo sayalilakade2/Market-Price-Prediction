@@ -14,11 +14,11 @@ import requests
 # Load the model
 #loaded_model = pickle.load(open(r"https://github.com/sayalilakade2/House_deploy-app/raw/main/finalized_model.sav", 'rb'))
 # Load the model
-model_url = "model.pkl"
+model_url = "https://github.com/sayalilakade2/Market-Price-Prediction/blob/main/model.pkl"
 r = requests.get(model_url)
 
 if r.status_code == 200:
-    with open('finalized_model.sav', 'wb') as f:
+    with open('model.pkl', 'wb') as f:
         f.write(r.content)
 else:
     print("Failed to download the model file")
