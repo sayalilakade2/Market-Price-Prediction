@@ -18,6 +18,7 @@ if os.path.exists(model_path):
     try:
         with open(model_path, 'rb') as model_file:
             loaded_model = pickle.load(model_file)
+            st.write(f"Loaded model type: {type(loaded_model)}")  # Debug: Print the type of the loaded model
             if not hasattr(loaded_model, 'predict'):
                 raise ValueError("The loaded object is not a model with a predict method.")
         st.success("Model loaded successfully.")
@@ -65,3 +66,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
