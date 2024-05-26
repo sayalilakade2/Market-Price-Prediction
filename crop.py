@@ -17,12 +17,7 @@ try:
             raise ValueError("The loaded object is not a model with a predict method.")
 except Exception as e:
     st.error(f"Error loading the model: {e}")
-
-def DecisionTreeRegressor(input_data):
-    input_data_asarray = np.asarray(input_data)
-    input_data_reshaped = input_data_asarray.reshape(1, -1) 
-    prediction = loaded_model.predict(input_data_reshaped)
-    return prediction
+    loaded_model = None
 
 def predict_price(entries):
     try:
@@ -36,8 +31,12 @@ def predict_price(entries):
             float(entries[5])   # Precipitation
         ]
         
+        # Prepare input data
+        input_data_asarray = np.asarray(input_data)
+        input_data_reshaped = input_data_asarray.reshape(1, -1)
+        
         # Perform prediction
-        predicted_price = DecisionTreeRegressor(input_data)[0]
+        predicted_price = loaded_model.predict(input_data_reshaped)[0]
         return f"The predicted price is ${predicted_price:,.2f}"
     except ValueError:
         return "Please enter valid inputs."
@@ -52,8 +51,12 @@ def main():
         entries.append(st.text_input(feature))
     
     if st.button('Predict Price'):
-        result = predict_price(entries)
-        st.success(result)
+        if loaded_model is not None:
+            result = predict_price(entries)
+            st.success(result)
+        else:
+            st.error("Model is not loaded properly.")
 
 if __name__ == '__main__':
     main()
+
