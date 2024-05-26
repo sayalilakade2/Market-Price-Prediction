@@ -9,12 +9,12 @@ import pickle
 import numpy as np
 import streamlit as st
 import requests
-import joblib
+
 
 # Load the model
 #loaded_model = pickle.load(open(r"https://github.com/sayalilakade2/House_deploy-app/raw/main/finalized_model.sav", 'rb'))
 # Load the model
-model_url = "https://github.com/sayalilakade2/House_deploy-app/raw/main/finalized_model.sav"
+model_url = "model.pkl"
 r = requests.get(model_url)
 
 if r.status_code == 200:
@@ -23,7 +23,7 @@ if r.status_code == 200:
 else:
     print("Failed to download the model file")
 
-model = joblib.load('finalized_model.sav')
+model = pickle.load('model.pkl')
 
 
 def DecisionTreeRegressor(input_data):
@@ -36,8 +36,7 @@ def predict_price(entries):
     try:
         # Get user input
         input_data = [int(entries[0]), float(entries[1]), int(entries[2]), int(entries[3]), 
-                      float(entries[4]), int(entries[5]), int(entries[6]), int(entries[7]), 
-                      int(entries[8]), int(entries[9]), int(entries[10]), int(entries[11])]
+                      float(entries[4]), int(entries[5]), int(entries[6])]
         
         # Perform prediction
         predicted_price = DecisionTreeRegressor(input_data)[0]
@@ -52,9 +51,8 @@ def predict_price(entries):
 def main():
     st.title("House Price Prediction")
     entries = []
-    for feature in ['Bedrooms:', 'Bathrooms:', 'Sqft Living:', 'Sqft Lot:', 'Floors:', 
-                    'Waterfront:', 'View:', 'Condition:', 'Sqft Above:', 'Sqft Basement:', 
-                    'Year Built:', 'Year Renovated:']:
+    for feature in ['District Name:', 'Market Name:', 'Commodity:', 'Variety:', 'Grade:', 
+                    'temp:', 'precip:']:
         entries.append(st.number_input(feature))
     
     if st.button('Predict Price'):
