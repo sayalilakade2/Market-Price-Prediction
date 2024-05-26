@@ -5,19 +5,26 @@ Created on Sun May 26 13:36:04 2024
 @author: sayal
 """
 
+import os
 import pickle
 import numpy as np
 import streamlit as st
 
 # Load the model
-try:
-    with open('model.pkl', 'rb') as model_file:
-        loaded_model = pickle.load(model_file)
-        if not hasattr(loaded_model, 'predict'):
-            raise ValueError("The loaded object is not a model with a predict method.")
-except Exception as e:
-    st.error(f"Error loading the model: {e}")
-    loaded_model = None
+model_path = 'model.pkl'
+loaded_model = None
+
+if os.path.exists(model_path):
+    try:
+        with open(model_path, 'rb') as model_file:
+            loaded_model = pickle.load(model_file)
+            if not hasattr(loaded_model, 'predict'):
+                raise ValueError("The loaded object is not a model with a predict method.")
+        st.success("Model loaded successfully.")
+    except Exception as e:
+        st.error(f"Error loading the model: {e}")
+else:
+    st.error(f"Model file not found at path: {model_path}")
 
 def predict_price(entries):
     try:
@@ -42,7 +49,6 @@ def predict_price(entries):
         return "Please enter valid inputs."
     except Exception as e:
         return f"Error during prediction: {e}"
-    
 
 def main():
     st.title("Market Price Prediction")
@@ -59,4 +65,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
