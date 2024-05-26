@@ -26,9 +26,15 @@ def DecisionTreeRegressor(input_data):
 
 def predict_price(entries):
     try:
-        # Get user input
-        input_data = [int(entries[0]), float(entries[1]), int(entries[2]), int(entries[3]), 
-                      float(entries[4]), int(entries[5]), int(entries[6])]
+        # Convert user input to appropriate data types
+        input_data = [
+            int(entries[0]),  # District Name
+            int(entries[1]),  # Market Name
+            int(entries[2]),  # Commodity
+            int(entries[3]),  # Variety
+            float(entries[4]),  # Temperature
+            float(entries[5])   # Precipitation
+        ]
         
         # Perform prediction
         predicted_price = DecisionTreeRegressor(input_data)[0]
@@ -42,8 +48,7 @@ def predict_price(entries):
 def main():
     st.title("Market Price Prediction")
     entries = []
-    for feature in ['District Name:', 'Market Name:', 'Commodity:', 'Variety:', 'Grade:', 
-                    'temp:', 'precip:']:
+    for feature in ['District Name', 'Market Name', 'Commodity', 'Variety', 'Temperature', 'Precipitation']:
         entries.append(st.text_input(feature))
     
     if st.button('Predict Price'):
