@@ -8,6 +8,7 @@ Created on Sun May 26 13:36:04 2024
 import pickle
 import numpy as np
 import streamlit as st
+from sklearn.tree import DecisionTreeRegressor
 
 
 # Load the model
