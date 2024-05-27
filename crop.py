@@ -8,11 +8,13 @@ Created on Sun May 26 13:36:04 2024
 import pickle
 import numpy as np
 import streamlit as st
-import sklearn
-
 
 # Load the model
-loaded_model = pickle.load(open("model.pkl", 'rb'))
+try:
+    with open('model.pkl', 'rb') as model_file:
+        loaded_model = pickle.load(model_file)
+except Exception as e:
+    st.error(f"Error loading the model: {e}")
 
 def DecisionTreeRegressor(input_data):
     input_data_asarray = np.asarray(input_data)
@@ -31,6 +33,8 @@ def predict_price(entries):
         return f"The predicted price is ${predicted_price:,.2f}"
     except ValueError:
         return "Please enter valid inputs."
+    except Exception as e:
+        return f"Error during prediction: {e}"
     
 
 def main():
@@ -38,7 +42,7 @@ def main():
     entries = []
     for feature in ['District Name:', 'Market Name:', 'Commodity:', 'Variety:', 'Grade:', 
                     'temp:', 'precip:']:
-        entries.append(st.number_input(feature))
+        entries.append(st.text_input(feature))
     
     if st.button('Predict Price'):
         result = predict_price(entries)
@@ -46,3 +50,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
