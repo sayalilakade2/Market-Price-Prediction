@@ -12,8 +12,8 @@ import streamlit as st
 from sklearn.preprocessing import LabelEncoder
 
 # Load the model
-model_path = r"C:\Users\sayal\internship\Farmoid\model.pkl"
-encoder_path = r"C:\Users\sayal\internship\Farmoid\label_encoders.pkl"
+model_path = "model.pkl"
+encoder_path = "label_encoders.pkl"
 
 with open(model_path, 'rb') as model_file:
     loaded_model = pickle.load(model_file)
